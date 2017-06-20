@@ -1,11 +1,13 @@
 function initMap(){
-	var map = new google.maps.Map(document.getElementById("map"),{
-		zoom: 5,
-		center: {lat: -9.1191427, lng: -77.0349046},
-		mapTypeControl: false,
-		zoomControl: false,
-		streetViewControl: false
-	});
+	var directionsService = new google.maps.DirectionsService;
+  	var directionsDisplay = new google.maps.DirectionsRenderer;
+	var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 7,
+    center: {lat: -9.1191427, lng: -77.0349046},
+  	});
+  	directionsDisplay.setMap(map);
+
+
 
 	function buscar(){
 		if(navigator.geolocation){
@@ -42,9 +44,27 @@ function initMap(){
 	var autocomplete = new google.maps.places.Autocomplete(inputR);
         autocomplete.bindTo('bounds', map);
 
-    /*trazar ruta*/
-    var directionsDisplay = new google.maps.DirectionsRenderer();/*nos dará las herramientas necesarias para que visualicemos en el navegador toda la información obtenida*/
-    var directionsService = new google.maps.DirectionsService();/*es el servicio que buscará en las bases de datos de Google Maps tanto los puntos como la(s) rutas existentes*/
+    document.getElementById('ruta').addEventListener('click', function(){
+    calculateAndDisplayRoute(directionsService, directionsDisplay);
+  	});
+
+	function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+    directionsService.route({
+    origin: document.getElementById('origen').value,
+    destination: document.getElementById('destino').value,
+    travelMode: 'DRIVING'
+    }, function(response, status) {
+        if (status === 'OK') {
+          directionsDisplay.setDirections(response);
+        } else {
+          window.alert('Directions request failed due to ' + status);
+        }
+      });
+  }
+
+    /*trazar ruta
+    var directionsDisplay = new google.maps.DirectionsRenderer();//nos dará las herramientas necesarias para que visualicemos en el navegador toda la información obtenida
+    var directionsService = new google.maps.DirectionsService();//es el servicio que buscará en las bases de datos de Google Maps tanto los puntos como la(s) rutas existentes
  
 function getDirections(){
 	var start = $('#origen').val();
@@ -54,7 +74,7 @@ function getDirections(){
 		return;
 	}
 		//Declaramos una variable con las opciones con las que se va a solicitar la información al objeto DirectionsServices
-	var request = {	/*lo siguiente son parámetros para hacer la búsqueda de acuerdo a los datos introducidos*/
+	var request = {	//lo siguiente son parámetros para hacer la búsqueda de acuerdo a los datos introducidos
 		 //A origin se le asigna el valor de  la caja de texto origen estableciendo el punto de partida de la ruta.
 	    origin: start,
 	 	 //A destination se le asigna el valor de la caja de texto destino con el que se especifica el punto final de la ruta.
@@ -72,7 +92,7 @@ function getDirections(){
     });
 }
 $('#ruta').on('click', function(){ getDirections(); });
-
+*/
 }	
 	
 	
