@@ -34,4 +34,13 @@ function initMap(){
 	var funcionError = function (error){
 		alert("Tenemos un problema con encontrar tu ubicación");
 	}
-}
+	/*Funcion para autocomplete*/
+	var inputL = (document.getElementById('origen'));
+	var autocomplete = new google.maps.places.Autocomplete(inputL);
+        autocomplete.bindTo('bounds', map);
+
+    var inputR = (document.getElementById('destino'));
+	var autocomplete = new google.maps.places.Autocomplete(inputR);
+        autocomplete.bindTo('bounds', map);
+
+};
