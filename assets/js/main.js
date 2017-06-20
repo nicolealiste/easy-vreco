@@ -1,7 +1,3 @@
-var map = null;
-var directionsDisplay = null;
-var directionsService = null;
-
 function initMap(){
 	var map = new google.maps.Map(document.getElementById("map"),{
 		zoom: 5,
@@ -49,8 +45,7 @@ function initMap(){
     /*trazar ruta*/
     var directionsDisplay = new google.maps.DirectionsRenderer();/*nos dará las herramientas necesarias para que visualicemos en el navegador toda la información obtenida*/
     var directionsService = new google.maps.DirectionsService();/*es el servicio que buscará en las bases de datos de Google Maps tanto los puntos como la(s) rutas existentes*/
- };   
-
+ 
 function getDirections(){
 	var start = $('#origen').val();
 	var end = $('#destino').val();
@@ -69,9 +64,7 @@ function getDirections(){
 	directionsService.route(request, function(response, status) {
 		//Si el estatus es OK procedemos, si no, mandamos un mensaje de error diciendo que no se pudo encontrar ruta entre ambos puntos	
         if (status == google.maps.DirectionsStatus.OK) {
-            directionsDisplay.setMap(map);
-            directionsDisplay.setPanel($("#panel_ruta").get(0));
-		    //hace la magia, imprime en el mapa la ruta y escribe las indicaciones de acuerdo a las 2 instrucciones anteriores.
+           //hace la magia, imprime en el mapa la ruta y escribe las indicaciones de acuerdo a las 2 instrucciones anteriores.
             directionsDisplay.setDirections(response);
         } else {
             alert("There is no directions available between these two points");
@@ -80,7 +73,7 @@ function getDirections(){
 }
 $('#ruta').on('click', function(){ getDirections(); });
 
-	
+}	
 	
 	
 
